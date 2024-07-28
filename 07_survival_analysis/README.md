@@ -12,11 +12,11 @@ In survival analysis, _censoring_ refers to incomplete information about the sur
 Censoring can introduce bias into the analysis, making it crucial to handle it appropriately to avoid skewing the results. We will explore methods to handle censored data, including likelihood functions and Kaplan-Meier estimates.
 
 
-- **Likelihood Functions**: These are a set of mathematical functions that enable statisticians to estimate the parameters of survival models in the presence of censored data. The likelihood function gives the probability of observing the data we have, including the censored observations. Mathematically, for a set of n individuals with observed survival times $ t_i $ and censoring indicators $ \delta_i $ (where $ \delta_i = 1 $ if the event is observed and $ \delta_i = 0 $ if the data is censored), the likelihood $ L $ is given by:
+- **Likelihood Functions**: These are a set of mathematical functions that enable statisticians to estimate the parameters of survival models in the presence of censored data. The likelihood function gives the probability of observing the data we have, including the censored observations. Mathematically, for a set of n individuals with observed survival times $t_i$ and censoring indicators $\delta_i$ (where $\delta_i = 1$ if the event is observed and $\delta_i = 0$ if the data is censored), the likelihood $L$ is given by:
   $$
   L(\theta) = \prod_{i: \delta_i=1} f(t_i; \theta) \prod_{i: \delta_i=0} S(t_i; \theta)
   $$
-  where $ f(t_i; \theta) $ is the probability density function, $ S(t_i; \theta) $ is the survival function, and $ \theta $ represents the parameters of the model.
+  where $f(t_i; \theta)$ is the probability density function, $S(t_i; \theta)$ is the survival function, and $\theta$ represents the parameters of the model.
 
 - **Kaplan-Meier Estimates**: This is a non-parametric statistic used to estimate the survival function from life data. It is particularly useful when dealing with censored data. The Kaplan-Meier estimator, also known as the product-limit estimator, calculates the probability of survival over time despite the censoring of some individuals. We will see more about this on the next sections.
 
@@ -37,26 +37,26 @@ This tool is fundamental for actuaries, demographers, and anyone interested in u
 ## Kaplan-Meier Curves 📉
 The Kaplan-Meier curve is a step function that estimates the survival function from lifetime data. It's particularly useful when you want to visualize the probability of surviving over time, taking into account right-censored data.
 
-- **Mathematical Definition**: Given $ n $ individuals, a Kaplan-Meier estimator $ \hat{S}(t) $ for survival probability at time $ t $ is calculated as:
+- **Mathematical Definition**: Given $n$ individuals, a Kaplan-Meier estimator $\hat{S}(t)$ for survival probability at time $t$ is calculated as:
   $$
   \hat{S}(t) = \prod_{i: t_i < t} \left(1 - \frac{d_i}{n_i}\right)
   $$
-  Here, $ t_i $ are the observed time points, $ d_i $ are the number of events at $ t_i $, and $ n_i $ are the individuals at risk just before $ t_i $.
+  Here, $t_i$ are the observed time points, $d_i$ are the number of events at $t_i$, and $n_i$ are the individuals at risk just before $t_i$.
 
 - **Intuition**: The curve drops each time an event occurs and remains constant between events, reflecting the latest estimated survival probability.
 
 - **Python Implementation**: Using the `lifelines` library, you can fit a Kaplan-Meier estimator using `KaplanMeierFitter` and plot the survival curve. You can check an example code [here](https://github.com/CamDavidsonPilon/lifelines/blob/master/docs/Survival%20analysis%20with%20lifelines.rst).
 
 ## The Hazard Function ⚠️
-The hazard function, often denoted as $ \lambda(t) $, describes the instant rate of occurrence of the event of interest at time $ t $, conditional on survival until that time.
+The hazard function, often denoted as $\lambda(t)$, describes the instant rate of occurrence of the event of interest at time $t$, conditional on survival until that time.
 
 - **Mathematical Definition**: The hazard function is given by the formula:
   $$
   \lambda(t) = \lim_{\Delta t \to 0} \frac{P(t \leq T < t + \Delta t \,\,|\,\, T \geq t)}{\Delta t}
   $$
-  where $ T $ is the random variable representing the event time.
+  where $T$ is the random variable representing the event time.
 
-- **Intuition**: It can be thought of as the risk of the event occurring at a very small interval around time $ t $, given survival up to time $ t $.
+- **Intuition**: It can be thought of as the risk of the event occurring at a very small interval around time $t$, given survival up to time $t$.
 
 - **Python Implementation**: In Python, you can estimate the hazard function using the `lifelines` library's estimators for hazard, such as the Nelson-Aalen estimator
   $$
@@ -68,11 +68,11 @@ The hazard function, often denoted as $ \lambda(t) $, describes the instant rate
 ## Cox Proportional Hazards Model 📊
 Up until now, we have made statistical models solely based on the survival times and other calculations related to it, but we have not consideres any other type of external variable.  The Cox proportional hazards model is a semiparametric model that relates the time-to-event data to one or more predictor variables. This is, it is a model that includes other information appart from the intrinsic survival rate. It is a basic model since it works as a simple linear combination of the variables and put into an exponential.
 
-- **Mathematical Definition**: The model assumes the hazard for individual $ i $ at time $ t $, $ \lambda_i(t) $, is:
+- **Mathematical Definition**: The model assumes the hazard for individual $i$ at time $t$, $\lambda_i(t)$, is:
   $$
   \lambda_i(t) = \lambda_0(t) \exp(\beta_1 x_{i1} + \beta_2 x_{i2} + \dots + \beta_p x_{ip})
   $$
-  where $ \lambda_0(t) $ is the baseline hazard, $ \beta_j $ are the coefficients, and $ x_{ij} $ are the covariates for individual $ i $.
+  where $\lambda_0(t)$ is the baseline hazard, $\beta_j$ are the coefficients, and $x_{ij}$ are the covariates for individual $i$.
 
 - **Intuition**: The model's strength lies in its ability to estimate the effect of several covariates on the hazard, or risk, of the event occurring, while assuming that these effects are constant over time.
 

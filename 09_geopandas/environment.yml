@@ -1,0 +1,24 @@
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - jupyter
+  - jupyterlab>3
+  - ipython
+  - numpy
+  - pandas
+  - geopandas
+  - pygeos
+  - rasterio
+  - rasterstats
+  - matplotlib
+  - mapclassify
+  - cartopy
+  - contextily
+  - geoplot
+  - ipympl
+  - ipyleaflet
+  - folium
+  - hvplot
+  - geoviews
+  - pyepsg
