@@ -38,9 +38,7 @@ This tool is fundamental for actuaries, demographers, and anyone interested in u
 The Kaplan-Meier curve is a step function that estimates the survival function from lifetime data. It's particularly useful when you want to visualize the probability of surviving over time, taking into account right-censored data.
 
 - **Mathematical Definition**: Given $n$ individuals, a Kaplan-Meier estimator $\hat{S}(t)$ for survival probability at time $t$ is calculated as:
-  $$
-  \hat{S}(t) = \prod_{i: t_i < t} \left(1 - \frac{d_i}{n_i}\right)
-  $$
+  $$\hat{S}(t) = \prod_{i: t_i < t} \left(1 - \frac{d_i}{n_i}\right)$$
   Here, $t_i$ are the observed time points, $d_i$ are the number of events at $t_i$, and $n_i$ are the individuals at risk just before $t_i$.
 
 - **Intuition**: The curve drops each time an event occurs and remains constant between events, reflecting the latest estimated survival probability.
@@ -51,17 +49,13 @@ The Kaplan-Meier curve is a step function that estimates the survival function f
 The hazard function, often denoted as $\lambda(t)$, describes the instant rate of occurrence of the event of interest at time $t$, conditional on survival until that time.
 
 - **Mathematical Definition**: The hazard function is given by the formula:
-  $$
-  \lambda(t) = \lim_{\Delta t \to 0} \frac{P(t \leq T < t + \Delta t \,\,|\,\, T \geq t)}{\Delta t}
-  $$
+  $$\lambda(t) = \lim_{\Delta t \to 0} \frac{P(t \leq T < t + \Delta t \,\,|\,\, T \geq t)}{\Delta t}$$
   where $T$ is the random variable representing the event time.
 
 - **Intuition**: It can be thought of as the risk of the event occurring at a very small interval around time $t$, given survival up to time $t$.
 
 - **Python Implementation**: In Python, you can estimate the hazard function using the `lifelines` library's estimators for hazard, such as the Nelson-Aalen estimator
-  $$
-  H(t) =  \int_0^t \lambda(z) \;dz,\qquad \hat{H}(t) = \sum_{t_i \le t} \frac{d_i}{n_i}
-  $$
+  $$H(t) =  \int_0^t \lambda(z) \;dz,\qquad \hat{H}(t) = \sum_{t_i \le t} \frac{d_i}{n_i}$$
   that you can find as `NelsonAalenFitter`. There are a bunch of other methods that you can also explore, depending on the details of the survival distribution: `WeibullFitter, ExponentialFitter, LogNormalFitter, LogLogisticFitter, PiecewiseExponentialFitter, GeneralizedGammaFitter, SplineFitter`.
 
 
@@ -69,9 +63,7 @@ The hazard function, often denoted as $\lambda(t)$, describes the instant rate o
 Up until now, we have made statistical models solely based on the survival times and other calculations related to it, but we have not consideres any other type of external variable.  The Cox proportional hazards model is a semiparametric model that relates the time-to-event data to one or more predictor variables. This is, it is a model that includes other information appart from the intrinsic survival rate. It is a basic model since it works as a simple linear combination of the variables and put into an exponential.
 
 - **Mathematical Definition**: The model assumes the hazard for individual $i$ at time $t$, $\lambda_i(t)$, is:
-  $$
-  \lambda_i(t) = \lambda_0(t) \exp(\beta_1 x_{i1} + \beta_2 x_{i2} + \dots + \beta_p x_{ip})
-  $$
+  $$\lambda_i(t) = \lambda_0(t) \exp(\beta_1 x_{i1} + \beta_2 x_{i2} + \dots + \beta_p x_{ip})$$
   where $\lambda_0(t)$ is the baseline hazard, $\beta_j$ are the coefficients, and $x_{ij}$ are the covariates for individual $i$.
 
 - **Intuition**: The model's strength lies in its ability to estimate the effect of several covariates on the hazard, or risk, of the event occurring, while assuming that these effects are constant over time.
